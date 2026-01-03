@@ -3,6 +3,7 @@ Specialist Journal — README (укр.)
 Коротко: репозиторій містить кастомний модуль specialist_journal для Odoo 19 і docker-скелет для локальної розробки (dev) та розгортання (prod). Нижче — логіка структури проекту, навіщо кожен файл/папка і що перевіряти при тестуванні. Команди для підняття контейнерів — в кінці.
 
 Структура проєкту (пояснення)
+```
 .
 ├── addons/
 │   └── specialist_journal/         # основний модуль Odoo
@@ -35,6 +36,7 @@ Specialist Journal — README (укр.)
 │   └── nginx/nginx.conf            # проксі-конфіг для Odoo (reverse proxy)
 ├── docker-compose.dev.yml          # compose для розробки (nginx + odoo; БД — зовнішня)
 └── docker-compose.prod.yml         # compose для проду (db + pgadmin + nginx + odoo)
+```
 
 Чому саме так
 
