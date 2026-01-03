@@ -1,0 +1,11 @@
+<odoo>
+  <record id="action_report_journal" model="ir.actions.report">
+    <field name="name">Specialist Journal</field>
+    <field name="model">specialist.journal.report.wizard</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">specialist_journal.report_journal_pdf</field>
+    <field name="report_file">specialist_journal.report_journal_pdf</field>
+    <field name="attachment_use">False</field>
+    <field name="print_report_name">'Journal - %s' % (object.partner_id.name or "Unknown")</field>
+  </record>
+</odoo>

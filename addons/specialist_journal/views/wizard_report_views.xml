@@ -1,0 +1,38 @@
+<odoo>
+  <record id="view_specialist_journal_report_wizard" model="ir.ui.view">
+    <field name="name">specialist.journal.report.wizard.form</field>
+    <field name="model">specialist.journal.report.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Print Journal">
+        <sheet>
+          <group>
+            <field name="partner_id" readonly="1"/>
+            <field name="all_entries"/>
+          </group>
+
+          <group invisible="all_entries">
+            <field name="date_from"/>
+            <field name="date_to"/>
+          </group>
+
+        </sheet>
+        <footer>
+          <button string="Print"
+                  type="object"
+                  name="action_print_journal"
+                  class="btn-primary"/>
+          <button string="Cancel"
+                  class="btn-secondary"
+                  special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_specialist_journal_report_wizard" model="ir.actions.act_window">
+    <field name="name">Print Journal</field>
+    <field name="res_model">specialist.journal.report.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+</odoo>

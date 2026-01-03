@@ -1,0 +1,23 @@
+<odoo>
+  <record id="view_partner_form_inherit_journal" model="ir.ui.view">
+    <field name="name">res.partner.form.journal.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//notebook" position="inside">
+        <page string="Journal" groups="specialist_journal.group_specialist,specialist_journal.group_journal_manager">
+          <button name="%(action_specialist_journal_report_wizard)d" type="action"
+                  string="Print Journal" class="btn-primary o_form_button"
+                  context="{'default_partner_id': id}" />
+          <field name="specialist_journal_ids" nolabel="1">
+            <list>
+              <field name="date"/>
+              <field name="specialist_id"/>
+              <field name="content"/>
+            </list>
+          </field>
+        </page>
+      </xpath>
+    </field>
+  </record>
+</odoo>

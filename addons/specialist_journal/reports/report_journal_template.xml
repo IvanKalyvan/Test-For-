@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="report_journal_pdf">
+    <t t-call="web.html_container">
+      <t t-call="web.external_layout">
+        <div class="page">
+          <h2>Journal for <t t-esc="docs.partner_id.name"/></h2>
+          <p>
+            <t t-if="docs.all_entries">
+              All entries
+            </t>
+            <t t-else="">
+              Period: <t t-esc="docs.date_from"/> — <t t-esc="docs.date_to"/>
+            </t>
+          </p>
+          <t t-set="entries" t-value="env['specialist.journal'].search(
+            [('partner_id','=',docs.partner_id.id)] if docs.all_entries else
+            [('partner_id','=',docs.partner_id.id),
+             ('date','&gt;=', docs.date_from + ' 00:00:00'),
+             ('date','&lt;=', docs.date_to + ' 23:59:59')],
+            order='date desc')"/>
+          <t t-if="not entries">
+            <p><em>No entries found.</em></p>
+          </t>
+          <t t-foreach="entries" t-as="r">
+            <div style="margin-bottom:10px;">
+              <div><strong><t t-esc="r.date"/></strong> — <t t-esc="r.specialist_id.name"/></div>
+              <div t-raw="r.content or ''"/>
+            </div>
+            <hr/>
+          </t>
+        </div>
+      </t>
+    </t>
+  </template>
+</odoo>

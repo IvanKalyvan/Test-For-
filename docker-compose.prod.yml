@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:7
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "8089:80"
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  odoo:
+    image: odoo:19.0
+    depends_on:
+      - db
+    environment:
+      - HOST=db
+      - PORT=5432
+      - USER=${DB_USER}
+      - PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    volumes:
+      - ./addons:/mnt/extra-addons
+      - ./data/filestore:/var/lib/odoo
+      - ./config/odoo.conf:/etc/odoo/odoo.conf:ro
+    command: >
+      odoo -d ${DB_NAME} 
+           --db_host=db
+           --db_user=${DB_USER} 
+           --db_password=${DB_PASSWORD} 
+           --init=base
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:stable
+    ports:
+      - "81:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - odoo
+    restart: unless-stopped
+
+volumes:
+  pgdata:

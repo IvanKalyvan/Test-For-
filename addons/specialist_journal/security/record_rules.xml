@@ -1,0 +1,10 @@
+<odoo>
+  <record id="rule_specialist_own_write" model="ir.rule">
+    <field name="name">Specialist: write own journal</field>
+    <field name="model_id" ref="model_specialist_journal"/>
+    <field name="domain_force">[('create_uid','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('group_specialist'))]"/>
+    <field name="perm_write">True</field>
+    <field name="perm_read">True</field>
+  </record>
+</odoo>
